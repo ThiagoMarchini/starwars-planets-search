@@ -6,12 +6,14 @@ function Table() {
 
   useEffect(() => {
     fetchSWData();
-  }, [data, fetchSWData]);
+  }, [
+    // fetchSWData
+  ]);
 
   const createTableHeaders = () => {
     let headers;
     if (data.length !== 0) {
-      headers = Object.keys(data.results[0])
+      headers = Object.keys(data[0])
         .filter((entry) => entry !== 'population');
       return (
         headers.map((entry, id) => <th key={ id }>{entry}</th>)
@@ -21,7 +23,7 @@ function Table() {
 
   const createTableRows = () => {
     if (data.length !== 0) {
-      const planets = data.results.map((entry) => Object.values(entry));
+      const planets = data.map((entry) => Object.values(entry));
       return (
         planets.map((planet, id) => (
           <tr key={ id }>
