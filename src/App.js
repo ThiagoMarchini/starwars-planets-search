@@ -1,9 +1,15 @@
 import React from 'react';
+import Table from './components/Table';
+import SWProvider from './context/SWProvider';
 import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <SWProvider>
+      <main>
+        <Table />
+      </main>
+    </SWProvider>
   );
 }
 
