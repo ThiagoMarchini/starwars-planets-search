@@ -6,7 +6,7 @@ function Table() {
 
   useEffect(() => {
     fetchSWData();
-  }, []);
+  }, [data, fetchSWData]);
 
   const createTableHeaders = () => {
     let headers;
@@ -14,7 +14,7 @@ function Table() {
       headers = Object.keys(data.results[0])
         .filter((entry) => entry !== 'population');
       return (
-        headers.map((entry) => <td key={ entry }>{entry}</td>)
+        headers.map((entry, id) => <th key={ id }>{entry}</th>)
       );
     }
   };
@@ -22,7 +22,6 @@ function Table() {
   const createTableRows = () => {
     if (data.length !== 0) {
       const planets = data.results.map((entry) => Object.values(entry));
-      // console.log(planets);
       return (
         planets.map((planet, id) => (
           <tr key={ id }>
