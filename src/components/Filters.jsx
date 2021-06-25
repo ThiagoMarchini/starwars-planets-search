@@ -57,7 +57,7 @@ function Filters() {
   function handleNumberInput({ target: { value } }) {
     setFilters({
       ...filters,
-      number: value,
+      number: value.toString(),
     });
   }
 
@@ -106,7 +106,7 @@ function Filters() {
         <label htmlFor="number">
           Quantidade:
           <input
-            type="numbers"
+            type="number"
             name="number"
             data-testid="value-filter"
             onChange={ handleNumberInput }

@@ -19,7 +19,6 @@ function SWProvider({ children }) {
     newData.results.forEach((element) => {
       delete element.residents;
     });
-    console.log(newData.results);
     setData(newData.results);
   };
 
@@ -55,16 +54,13 @@ function SWProvider({ children }) {
       let filteredData;
       switch (comparison) {
       case 'maior que':
-        filteredData = data.filter((entry) => parseInt(entry[column], 10) >= intNumber);
-        console.log('Filtrando maior que');
+        filteredData = data.filter((entry) => parseInt(entry[column], 10) > intNumber);
         break;
       case 'menor que':
-        filteredData = data.filter((entry) => parseInt(entry[column], 10) <= intNumber);
-        console.log('Filtrando menor que');
+        filteredData = data.filter((entry) => parseInt(entry[column], 10) < intNumber);
         break;
       default:
         filteredData = data.filter((entry) => parseInt(entry[column], 10) === intNumber);
-        console.log('Filtrando igual a');
         break;
       }
       setData(filteredData);
@@ -74,7 +70,6 @@ function SWProvider({ children }) {
   useEffect(() => {
     if (filters.filterByNumericValues.length !== 0) {
       applyOtherFilters();
-      console.log('useEffect filterByName');
     } else {
       fetchSWData();
     }
@@ -91,7 +86,6 @@ function SWProvider({ children }) {
     });
   };
 
-  console.log(data);
   return (
     <SWContext.Provider
       value={
