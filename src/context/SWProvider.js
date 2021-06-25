@@ -17,7 +17,7 @@ function SWProvider({ children }) {
     setIsFetching(true);
     const newData = await getSWData();
     newData.results.forEach((element) => {
-      delete element.population;
+      delete element.residents;
     });
     console.log(newData.results);
     setData(newData.results);
