@@ -71,14 +71,17 @@ function SWProvider({ children }) {
   const addOtherFilters = (column, comparison, number) => {
     setFilters({
       ...filters,
-      filterByNumericValues: [
-        filters.filterByNumericValues.concat({
-          column,
-          comparison,
-          number,
-        }),
-      ],
+      filterByNumericValues: [{
+        column,
+        comparison,
+        number,
+      }],
     });
+
+    console.log(column);
+    console.log(comparison);
+    console.log(number);
+    console.log(filters);
   };
 
   console.log(data);

@@ -3,6 +3,18 @@ import SWContext from '../context/SWContext';
 
 function Filters() {
   const { addNameFilter, addOtherFilters } = useContext(SWContext);
+  const [columnFilter] = useState([
+    { population: 'Population' },
+    { orbital_period: 'Orbital Period' },
+    { diameter: 'Diameter' },
+    { rotation_period: 'Rotation Period' },
+    { surface_water: 'Surface Water' },
+  ]);
+  const [comparisonFilter] = useState([
+    'maior que',
+    'menor que',
+    'igual a',
+  ]);
   const [filters, setFilters] = useState({
     column: '',
     comparison: '',
@@ -49,7 +61,7 @@ function Filters() {
     });
   }
 
-  function applyComparison() {
+  function applyOtherFilters() {
     const { column, comparison, number } = filters;
     addOtherFilters(column, comparison, number);
   }
@@ -64,6 +76,7 @@ function Filters() {
             data-testid="column-filter"
             onChange={ handleColumnSelect }
           >
+            <option>--</option>
             {columnFilter.map((entry, id) => (
               <option
                 key={ id }
@@ -81,7 +94,8 @@ function Filters() {
             data-testid="comparison-filter"
             onChange={ handleComparisonSelect }
           >
-            {comparison.map((entry, id) => (
+            <option>--</option>
+            {comparisonFilter.map((entry, id) => (
               <option
                 key={ id }
                 value={ entry }
@@ -103,7 +117,7 @@ function Filters() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ applyComparison }
+          onClick={ applyOtherFilters }
         >
           Filtrar
         </button>
