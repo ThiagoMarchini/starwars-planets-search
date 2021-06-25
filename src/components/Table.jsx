@@ -13,8 +13,7 @@ function Table() {
   const createTableHeaders = () => {
     let headers;
     if (data.length !== 0) {
-      headers = Object.keys(data[0])
-        .filter((entry) => entry !== 'population');
+      headers = Object.keys(data[0]);
       return (
         headers.map((entry, id) => <th key={ id }>{entry}</th>)
       );
@@ -40,11 +39,9 @@ function Table() {
 
   return (
     <table>
-      <thead>
-        <tr>
-          {createTableHeaders()}
-        </tr>
-      </thead>
+      <tr>
+        {createTableHeaders()}
+      </tr>
       <tbody>
         {createTableRows()}
       </tbody>

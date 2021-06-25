@@ -4,11 +4,11 @@ import SWContext from '../context/SWContext';
 function Filters() {
   const { addNameFilter, addOtherFilters } = useContext(SWContext);
   const [columnFilter] = useState([
-    { population: 'Population' },
-    { orbital_period: 'Orbital Period' },
-    { diameter: 'Diameter' },
-    { rotation_period: 'Rotation Period' },
-    { surface_water: 'Surface Water' },
+    { population: 'population' },
+    { orbital_period: 'orbital_period' },
+    { diameter: 'diameter' },
+    { rotation_period: 'rotation_period' },
+    { surface_water: 'surface_water' },
   ]);
   const [comparisonFilter] = useState([
     'maior que',
@@ -16,9 +16,9 @@ function Filters() {
     'igual a',
   ]);
   const [filters, setFilters] = useState({
-    column: '',
-    comparison: '',
-    number: null,
+    column: 'population',
+    comparison: 'menor que',
+    number: '0',
   });
 
   function handleNameChange({ target: { value } }) {
@@ -63,7 +63,7 @@ function Filters() {
 
   function applyOtherFilters() {
     const { column, comparison, number } = filters;
-    addOtherFilters(column, comparison, number.toString());
+    addOtherFilters(column, comparison, number);
   }
 
   function selectors() {
@@ -76,7 +76,6 @@ function Filters() {
             data-testid="column-filter"
             onChange={ handleColumnSelect }
           >
-            <option>--</option>
             {columnFilter.map((entry, id) => (
               <option
                 key={ id }
@@ -94,7 +93,6 @@ function Filters() {
             data-testid="comparison-filter"
             onChange={ handleComparisonSelect }
           >
-            <option>--</option>
             {comparisonFilter.map((entry, id) => (
               <option
                 key={ id }

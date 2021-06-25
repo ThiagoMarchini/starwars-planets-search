@@ -16,6 +16,10 @@ function SWProvider({ children }) {
   const fetchSWData = async () => {
     setIsFetching(true);
     const newData = await getSWData();
+    newData.results.forEach((element) => {
+      delete element.population;
+    });
+    console.log(newData.results);
     setData(newData.results);
   };
 
@@ -47,18 +51,19 @@ function SWProvider({ children }) {
     console.log(filters);
     if (filters.filterByNumericValues.length !== 0) {
       const { column, comparison, number } = filters.filterByNumericValues[0];
+      const intNumber = parseInt(number, 10);
       let filteredData;
       switch (comparison) {
       case 'maior que':
-        filteredData = data.filter((entry) => entry[column] > number);
+        filteredData = data.filter((entry) => parseInt(entry[column], 10) >= intNumber);
         console.log('Filtrando maior que');
         break;
       case 'menor que':
-        filteredData = data.filter((entry) => entry[column] < number);
+        filteredData = data.filter((entry) => parseInt(entry[column], 10) <= intNumber);
         console.log('Filtrando menor que');
         break;
       default:
-        filteredData = data.filter((entry) => entry[column] === number);
+        filteredData = data.filter((entry) => parseInt(entry[column], 10) === intNumber);
         console.log('Filtrando igual a');
         break;
       }
