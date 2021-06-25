@@ -6,16 +6,14 @@ function Table() {
 
   useEffect(() => {
     fetchSWData();
-  }, [
-    // fetchSWData
-  ]);
+  }, []);
 
   const createTableHeaders = () => {
     let headers;
     if (data.length !== 0) {
       headers = Object.keys(data[0]);
       return (
-        headers.map((entry, id) => <td key={ id }>{entry}</td>)
+        headers.map((entry, id) => <th key={ id }>{entry}</th>)
       );
     }
   };
@@ -39,11 +37,9 @@ function Table() {
 
   return (
     <table>
-      <thead>
-        <tr>
-          {createTableHeaders()}
-        </tr>
-      </thead>
+      <tr>
+        {createTableHeaders()}
+      </tr>
       <tbody>
         {createTableRows()}
       </tbody>
