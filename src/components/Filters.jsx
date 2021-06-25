@@ -63,7 +63,7 @@ function Filters() {
 
   function applyOtherFilters() {
     const { column, comparison, number } = filters;
-    addOtherFilters(column, comparison, number);
+    addOtherFilters(column, comparison, number.toString());
   }
 
   function selectors() {

@@ -44,25 +44,32 @@ function SWProvider({ children }) {
 
   // Filtro pelas outras opções
   const applyOtherFilters = () => {
-    const { column, comparison, number } = filters.filterByNumericValues;
-    let filteredData;
-    switch (comparison) {
-    case 'maior que':
-      filteredData = data.filter((entry) => entry[column] > number);
-      break;
-    case 'menor que':
-      filteredData = data.filter((entry) => entry[column] < number);
-      break;
-    default:
-      filteredData = data.filter((entry) => entry[column] === number);
-      break;
+    console.log(filters);
+    if (filters.filterByNumericValues.length !== 0) {
+      const { column, comparison, number } = filters.filterByNumericValues[0];
+      let filteredData;
+      switch (comparison) {
+      case 'maior que':
+        filteredData = data.filter((entry) => entry[column] > number);
+        console.log('Filtrando maior que');
+        break;
+      case 'menor que':
+        filteredData = data.filter((entry) => entry[column] < number);
+        console.log('Filtrando menor que');
+        break;
+      default:
+        filteredData = data.filter((entry) => entry[column] === number);
+        console.log('Filtrando igual a');
+        break;
+      }
+      setData(filteredData);
     }
-    setData(filteredData);
   };
 
   useEffect(() => {
-    if (filters.filterByNumericValues !== []) {
+    if (filters.filterByNumericValues.length !== 0) {
       applyOtherFilters();
+      console.log('useEffect filterByName');
     } else {
       fetchSWData();
     }
@@ -77,11 +84,6 @@ function SWProvider({ children }) {
         number,
       }],
     });
-
-    console.log(column);
-    console.log(comparison);
-    console.log(number);
-    console.log(filters);
   };
 
   console.log(data);
