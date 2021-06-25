@@ -47,7 +47,6 @@ function SWProvider({ children }) {
 
   // Filtro pelas outras opções
   const applyOtherFilters = () => {
-    console.log(filters);
     if (filters.filterByNumericValues.length !== 0) {
       const { column, comparison, number } = filters.filterByNumericValues[0];
       const intNumber = parseInt(number, 10);
@@ -78,13 +77,30 @@ function SWProvider({ children }) {
   const addOtherFilters = (column, comparison, number) => {
     setFilters({
       ...filters,
-      filterByNumericValues: [{
+      filterByNumericValues: filters.filterByNumericValues.concat({
         column,
         comparison,
         number,
-      }],
+      }),
     });
   };
+
+  const removeNumberFilter = (id) => {
+    const newFilter = filters.filterByNumericValues;
+    newFilter.splice(id, 1);
+
+    setFilters({
+      ...filters,
+      filterByNumericValues: newFilter,
+    });
+    fetchSWData();
+    if (filters.filterByNumericValues.length > 0) {
+      applyOtherFilters();
+    }
+  };
+
+  const otherFilters = filters.filterByNumericValues;
+  console.log(otherFilters);
 
   return (
     <SWContext.Provider
@@ -93,7 +109,9 @@ function SWProvider({ children }) {
           isFetching,
           fetchSWData,
           addNameFilter,
-          addOtherFilters }
+          addOtherFilters,
+          removeNumberFilter,
+          otherFilters }
       }
     >
       { children }

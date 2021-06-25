@@ -37,9 +37,11 @@ function Table() {
 
   return (
     <table>
-      <tr>
-        {createTableHeaders()}
-      </tr>
+      <thead>
+        <tr>
+          {createTableHeaders()}
+        </tr>
+      </thead>
       <tbody>
         {createTableRows()}
       </tbody>

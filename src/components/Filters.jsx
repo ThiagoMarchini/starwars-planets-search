@@ -2,8 +2,13 @@ import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
 
 function Filters() {
-  const { addNameFilter, addOtherFilters } = useContext(SWContext);
-  const [columnFilter] = useState([
+  const {
+    addNameFilter,
+    addOtherFilters,
+    otherFilters,
+    removeNumberFilter,
+  } = useContext(SWContext);
+  const [columnFilter, setColumnFilter] = useState([
     { population: 'population' },
     { orbital_period: 'orbital_period' },
     { diameter: 'diameter' },
@@ -17,7 +22,7 @@ function Filters() {
   ]);
   const [filters, setFilters] = useState({
     column: 'population',
-    comparison: 'menor que',
+    comparison: 'maior que',
     number: '0',
   });
 
@@ -63,6 +68,30 @@ function Filters() {
 
   function applyOtherFilters() {
     const { column, comparison, number } = filters;
+    const newColumnFilter = columnFilter;
+    const population = 0;
+    const orbital = 1;
+    const diameter = 2;
+    const rotation = 3;
+    const water = 4;
+    switch (column) {
+    case 'population':
+      newColumnFilter.splice(population, 1);
+      break;
+    case 'orbital_period':
+      newColumnFilter.splice(orbital, 1);
+      break;
+    case 'diameter':
+      newColumnFilter.splice(diameter, 1);
+      break;
+    case 'rotation_period':
+      newColumnFilter.splice(rotation, 1);
+      break;
+    default:
+      newColumnFilter.splice(water, 1);
+      break;
+    }
+    setColumnFilter(newColumnFilter);
     addOtherFilters(column, comparison, number);
   }
 
@@ -123,11 +152,62 @@ function Filters() {
     );
   }
 
+  function remove(element, column) {
+    const newColumns = columnFilter;
+    const population = 0;
+    const orbital = 1;
+    const diameter = 2;
+    const rotation = 3;
+    const water = 4;
+    let index;
+    removeNumberFilter(element);
+    switch (column) {
+    case 'population':
+      index = population;
+      break;
+    case 'orbital_period':
+      index = orbital;
+      break;
+    case 'diameter':
+      index = diameter;
+      break;
+    case 'rotation_period':
+      index = rotation;
+      break;
+    default:
+      index = water;
+      break;
+    }
+    newColumns.splice(index, 0, column);
+    setColumnFilter(newColumns);
+  }
+
+  function showAppliedFilters() {
+    if (otherFilters.length !== 0) {
+      return (
+        <ul>
+          {otherFilters.map((entry, id) => (
+            <li key={ id } data-testid="filter">
+              { entry.column }
+              &nbsp;
+              { entry.comparison }
+              &nbsp;
+              { entry.number }
+              &nbsp;
+              <button onClick={ () => remove(id, entry.column) } type="button">X</button>
+            </li>
+          ))}
+        </ul>
+      );
+    }
+  }
+
   return (
     <div>
       <h1>Filtros</h1>
       {textFilter()}
       {selectors()}
+      {showAppliedFilters()}
     </div>
   );
 }
