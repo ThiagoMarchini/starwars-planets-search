@@ -5,6 +5,7 @@ import getSWData from '../services/SWAPI';
 
 function SWProvider({ children }) {
   const [data, setData] = useState([]);
+  const [rootData, setRootData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -20,6 +21,7 @@ function SWProvider({ children }) {
       delete element.residents;
     });
     setData(newData.results);
+    setRootData(newData.results);
   };
 
   // Filtro por nome
@@ -32,7 +34,7 @@ function SWProvider({ children }) {
     if (filters.filterByName.name !== '') {
       applyNameFilter(filters.filterByName.name);
     } else {
-      fetchSWData();
+      setData(rootData);
     }
   }, [filters.filterByName.name]);
 
@@ -48,21 +50,29 @@ function SWProvider({ children }) {
   // Filtro pelas outras opções
   const applyOtherFilters = () => {
     if (filters.filterByNumericValues.length !== 0) {
-      const { column, comparison, number } = filters.filterByNumericValues[0];
-      const intNumber = parseInt(number, 10);
-      let filteredData;
-      switch (comparison) {
-      case 'maior que':
-        filteredData = data.filter((entry) => parseInt(entry[column], 10) > intNumber);
-        break;
-      case 'menor que':
-        filteredData = data.filter((entry) => parseInt(entry[column], 10) < intNumber);
-        break;
-      default:
-        filteredData = data.filter((entry) => parseInt(entry[column], 10) === intNumber);
-        break;
-      }
-      setData(filteredData);
+      filters.filterByNumericValues.forEach((element) => {
+        const { column, comparison, number } = element;
+        const intNumber = parseInt(number, 10);
+        let filteredData;
+        switch (comparison) {
+        case 'maior que':
+          filteredData = data.filter(
+            (entry) => parseInt(entry[column], 10) > intNumber,
+          );
+          break;
+        case 'menor que':
+          filteredData = data.filter(
+            (entry) => parseInt(entry[column], 10) < intNumber,
+          );
+          break;
+        default:
+          filteredData = data.filter(
+            (entry) => parseInt(entry[column], 10) === intNumber,
+          );
+          break;
+        }
+        setData(filteredData);
+      });
     }
   };
 
@@ -70,7 +80,7 @@ function SWProvider({ children }) {
     if (filters.filterByNumericValues.length !== 0) {
       applyOtherFilters();
     } else {
-      fetchSWData();
+      setData(rootData);
     }
   }, [filters.filterByNumericValues]);
 
@@ -93,14 +103,14 @@ function SWProvider({ children }) {
       ...filters,
       filterByNumericValues: newFilter,
     });
-    fetchSWData();
+    setData(rootData);
     if (filters.filterByNumericValues.length > 0) {
       applyOtherFilters();
     }
+    console.log(filters.filterByNumericValues);
   };
 
   const otherFilters = filters.filterByNumericValues;
-  console.log(otherFilters);
 
   return (
     <SWContext.Provider

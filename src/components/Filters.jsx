@@ -185,19 +185,26 @@ function Filters() {
   function showAppliedFilters() {
     if (otherFilters.length !== 0) {
       return (
-        <ul>
+        <div className="filters">
           {otherFilters.map((entry, id) => (
-            <li key={ id } data-testid="filter">
+            <span key={ id } data-testid="filter">
               { entry.column }
               &nbsp;
               { entry.comparison }
               &nbsp;
               { entry.number }
               &nbsp;
-              <button onClick={ () => remove(id, entry.column) } type="button">X</button>
-            </li>
+              <button
+                onClick={ () => remove(id, entry.column) }
+                type="button"
+                name="button"
+                id="button"
+              >
+                X
+              </button>
+            </span>
           ))}
-        </ul>
+        </div>
       );
     }
   }
