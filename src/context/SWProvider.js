@@ -62,11 +62,11 @@ function SWProvider({ children }) {
 
   useEffect(() => {
     if (filters.filterByNumericValues !== []) {
-      applyNameFilter(filters.filterByName.name);
+      applyOtherFilters();
     } else {
       fetchSWData();
     }
-  }, [applyNameFilter, filters.filterByName.name]);
+  }, [filters.filterByNumericValues]);
 
   const addOtherFilters = (column, comparison, number) => {
     setFilters({

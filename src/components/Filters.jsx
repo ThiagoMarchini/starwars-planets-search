@@ -2,19 +2,7 @@ import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
 
 function Filters() {
-  const { addNameFilter } = useContext(SWContext);
-  const [columnFilter, setColumnFilter] = useState([
-    { population: 'Population' },
-    { orbital_period: 'Orbital Period' },
-    { diameter: 'Diameter' },
-    { rotation_period: 'Rotation Period' },
-    { surface_water: 'Surface Water' },
-  ]);
-  const [comparison, setComparsion] = useState([
-    'maior que',
-    'menor que',
-    'igual a',
-  ]);
+  const { addNameFilter, addOtherFilters } = useContext(SWContext);
   const [filters, setFilters] = useState({
     column: '',
     comparison: '',
@@ -47,7 +35,7 @@ function Filters() {
     });
   }
 
-  function handleComparsionSelect({ target: { value } }) {
+  function handleComparisonSelect({ target: { value } }) {
     setFilters({
       ...filters,
       comparison: value,
@@ -59,6 +47,11 @@ function Filters() {
       ...filters,
       number: value,
     });
+  }
+
+  function applyComparison() {
+    const { column, comparison, number } = filters;
+    addOtherFilters(column, comparison, number);
   }
 
   function selectors() {
@@ -86,7 +79,7 @@ function Filters() {
           <select
             name="comparison"
             data-testid="comparison-filter"
-            onChange={ handleComparsionSelect }
+            onChange={ handleComparisonSelect }
           >
             {comparison.map((entry, id) => (
               <option
@@ -110,7 +103,7 @@ function Filters() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick=""
+          onClick={ applyComparison }
         >
           Filtrar
         </button>
