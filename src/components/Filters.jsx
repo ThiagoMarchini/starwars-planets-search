@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
 import { Button, Form, Row, Col } from 'react-bootstrap';
+import '../App.css';
 
 function Filters() {
   const {
@@ -151,6 +152,7 @@ function Filters() {
           </Col>
           <Col>
             <Button
+              class="button"
               variant="warning"
               type="button"
               data-testid="button-filter"

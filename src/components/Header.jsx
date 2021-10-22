@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import '../App.css';
 
 function Header() {
   return(
@@ -8,7 +9,7 @@ function Header() {
         <Col>
           <Image src="/images/generic.png" height="100px" rounded />
         </Col>
-        <Col xs={6}>
+        <Col xs={6} class="title">
           <h1>Star Wars Planets Info</h1>
         </Col>
         <Col>
