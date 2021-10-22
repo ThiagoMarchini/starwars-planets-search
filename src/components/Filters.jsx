@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
+import { Button, Form, Row, Col } from 'react-bootstrap';
 
 function Filters() {
   const {
@@ -32,16 +33,16 @@ function Filters() {
 
   function textFilter() {
     return (
-      <label htmlFor="name">
-        Nome:
-        <input
+      <Form.Label htmlFor="name">
+        <Form.Control
           type="text"
           name="name"
           id="name"
           data-testid="name-filter"
           onChange={ handleNameChange }
+          placeholder="Nome do planeta"
         />
-      </label>
+      </Form.Label>
     );
   }
 
@@ -97,58 +98,69 @@ function Filters() {
 
   function selectors() {
     return (
-      <form>
-        <label htmlFor="columnSelect">
-          Coluna:
-          <select
-            name="columnSelect"
-            data-testid="column-filter"
-            onChange={ handleColumnSelect }
-          >
-            {columnFilter.map((entry, id) => (
-              <option
-                key={ id }
-                value={ Object.keys(entry) }
+      <Form>
+        <Row>
+          <Col xs={4}>
+            <Form.Label htmlFor="columnSelect">
+              Coluna:
+              <Form.Select
+                name="columnSelect"
+                data-testid="column-filter"
+                onChange={ handleColumnSelect }
               >
-                { Object.values(entry) }
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="comparison">
-          Faixa:
-          <select
-            name="comparison"
-            data-testid="comparison-filter"
-            onChange={ handleComparisonSelect }
-          >
-            {comparisonFilter.map((entry, id) => (
-              <option
-                key={ id }
-                value={ entry }
+                {columnFilter.map((entry, id) => (
+                  <option
+                    key={ id }
+                    value={ Object.keys(entry) }
+                  >
+                    { Object.values(entry) }
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Label>
+          </Col>
+          <Col lg={4}>
+            <Form.Label htmlFor="comparison">
+              Faixa:
+              <Form.Select
+                name="comparison"
+                data-testid="comparison-filter"
+                onChange={ handleComparisonSelect }
               >
-                { entry }
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="number">
-          Quantidade:
-          <input
-            type="number"
-            name="number"
-            data-testid="value-filter"
-            onChange={ handleNumberInput }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="button-filter"
-          onClick={ applyOtherFilters }
-        >
-          Filtrar
-        </button>
-      </form>
+                {comparisonFilter.map((entry, id) => (
+                  <option
+                    key={ id }
+                    value={ entry }
+                  >
+                    { entry }
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Label>
+          </Col>
+          <Col md>
+            <Form.Label htmlFor="number">
+              Quantidade:
+              <Form.Control
+                type="number"
+                name="number"
+                data-testid="value-filter"
+                onChange={ handleNumberInput }
+              />
+            </Form.Label>
+          </Col>
+          <Col>
+            <Button
+              variant="warning"
+              type="button"
+              data-testid="button-filter"
+              onClick={ applyOtherFilters }
+            >
+              Filtrar
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     );
   }
 
@@ -211,7 +223,7 @@ function Filters() {
 
   return (
     <div>
-      <h1>Filtros</h1>
+      <h4>Filtros</h4>
       {textFilter()}
       {selectors()}
       {showAppliedFilters()}

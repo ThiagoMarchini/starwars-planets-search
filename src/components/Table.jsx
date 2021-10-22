@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import SWContext from '../context/SWContext';
+import BSTable from 'react-bootstrap/Table';
 
 function Table() {
   const { data, isFetching, fetchSWData } = useContext(SWContext);
@@ -36,7 +37,7 @@ function Table() {
   if (!isFetching) return <h1>Loading...</h1>;
 
   return (
-    <table>
+    <BSTable responsive striped bordered hover variant="dark">
       <thead>
         <tr>
           {createTableHeaders()}
@@ -45,7 +46,7 @@ function Table() {
       <tbody>
         {createTableRows()}
       </tbody>
-    </table>
+    </BSTable>
   );
 }
 
